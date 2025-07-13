@@ -1,0 +1,2475 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mes vidéos YouTube</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --background: #f9fafb;
+      --text: #111827;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      background-color: var(--background);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .video {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .video:hover {
+      transform: translateY(-5px);
+    }
+
+    .video h3 {
+      padding: 15px;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #eee;
+      background: linear-gradient(90deg, #6366f1, #a78bfa);
+      color: white;
+      margin: 0;
+    }
+
+    .thumb, iframe {
+      width: 100%;
+      display: block;
+    }
+
+    .thumb {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mes vidéos YouTube</h1>
+  <div class="grid" id="video-list"></div>
+  <script>
+    const videos = [
+  {
+    "title": "Amélioration de l'analyse OCR des tickets de caisse",
+    "id": "FJM1ni6ZvLw"
+  },
+  {
+    "title": "Qui de chat gpt ou claude AI fera le meilleur cv?",
+    "id": "DtQAZz-tmr4"
+  },
+  {
+    "title": "Présentation de l'application de budget",
+    "id": "p6cgcw_CRNU"
+  },
+  {
+    "title": "Présentation de l'application de bonne affaire V1",
+    "id": "Gm4aUyZPYdA"
+  },
+  {
+    "title": "Jour 5 ajout des likes",
+    "id": "-18csWXRSNQ"
+  },
+  {
+    "title": "Jour 4 Partie 3 la validation des affaires",
+    "id": "um14_Vnawlg"
+  },
+  {
+    "title": "Partie 2 jour 4 ajout permission sur les rôles ok maintenant faut coder la validation des brouillons",
+    "id": "Y49hcfGs9Qk"
+  },
+  {
+    "title": "Budget deuxieme semaine de juillet 2025",
+    "id": "ZHOoJnB59ZM"
+  },
+  {
+    "title": "Jour 4 rôle et permission dans l application",
+    "id": "dLdqlnG_JWg"
+  },
+  {
+    "title": "Croire en soi",
+    "id": "AUkdpXnXBr4"
+  },
+  {
+    "title": "Road map pour les prochaines étapes de l'application de bonnes affaires",
+    "id": "BRc0_-D54bs"
+  },
+  {
+    "title": "Partie 3 jour 2 Défi des un mois sur mon application de gestion de bonne affaire",
+    "id": "XjVtSpZryuo"
+  },
+  {
+    "title": "Partie2 du jour 2 sur la gestion de bonnes affaires",
+    "id": "OcHFVsOVS3M"
+  },
+  {
+    "title": "Gestion des bonnes affaire jour 2 mise en place du système de connexion",
+    "id": "n627tSASwww"
+  },
+  {
+    "title": "Jour 1 du projet de partage de bonne affaire",
+    "id": "BeHdMTSxRoM"
+  },
+  {
+    "title": "Nouveau projet Défi des un mois pour créer une application web de bonnes affaires",
+    "id": "e3D5ccmNF_I"
+  },
+  {
+    "title": "Budget première semaine de Juillet 2025",
+    "id": "ybA0sgpD39A"
+  },
+  {
+    "title": "Nouvelle feature sur l’application de budget budget financier",
+    "id": "lFjIaJ1Za9o"
+  },
+  {
+    "title": "Coding game somme des 1 dans un byte",
+    "id": "3X2mrQg6dj4"
+  },
+  {
+    "title": "Budget 4 eme semaine de juin 2025",
+    "id": "9F5aik0Xrd8"
+  },
+  {
+    "title": "Nouvelle fonctionnalité les dépenses et revenus récurrents",
+    "id": "W5QH9GPqzwE"
+  },
+  {
+    "title": "Coding game calculer la distance entre N piliers de même largeur",
+    "id": "W2QXfBj604E"
+  },
+  {
+    "title": "Nouvelle version de l'application de budget",
+    "id": "esrL2kI8wxE"
+  },
+  {
+    "title": "Ajout d'un chat pour l'ajout de dépenses ou de revenus ou de catégories de dépenses",
+    "id": "7IjNe-ttgjU"
+  },
+  {
+    "title": "Intégration d'un chat bot pour ajouter ses dépenses",
+    "id": "JmJBCvr_IBo"
+  },
+  {
+    "title": "Somme des nombres paires d'un nombre coding game",
+    "id": "398xq3t-W-E"
+  },
+  {
+    "title": "Gamification de l'application par une tirelire qui grossit plus on épargne",
+    "id": "RRIceFpBpHA"
+  },
+  {
+    "title": "Budget 3 eme semaine de juin 2025",
+    "id": "y0Qo892MMuI"
+  },
+  {
+    "title": "Exemple d'utilisation de l'api notion",
+    "id": "iP48_BQKX2k"
+  },
+  {
+    "title": "Notion j’organise mon espace",
+    "id": "-TfQVTjUrvU"
+  },
+  {
+    "title": "J'apprends à créer des choses sur notion pour m'organiser",
+    "id": "RyzQvj4uTio"
+  },
+  {
+    "title": "Budget de 2 semaine de juin 2025",
+    "id": "AOUyAijw8Dk"
+  },
+  {
+    "title": "Ajout d’icône sur les enveloppes",
+    "id": "12lqjOiIEW8"
+  },
+  {
+    "title": "Analyse budget deuxième semaine de juin 2025",
+    "id": "5KOtF6BQdcE"
+  },
+  {
+    "title": "Analyse quinte vendredi 6 juin 2025",
+    "id": "zx-tsqUcySQ"
+  },
+  {
+    "title": "Budget première semaine de juin",
+    "id": "lwwu3ZNHoGw"
+  },
+  {
+    "title": "Objectif pour les semaines à venir sur l'application de budget",
+    "id": "V1Qhbn3Pzmg"
+  },
+  {
+    "title": "Analyse Quinte Jeudi 5 juin 2025",
+    "id": "LuxOgDks3CA"
+  },
+  {
+    "title": "Avancement de l'application de budget ajout des défis des enveloppes",
+    "id": "UVh_r5IQnfY"
+  },
+  {
+    "title": "Analyse quinte mercredi 4 juin 2025",
+    "id": "M7bmdjsZyyY"
+  },
+  {
+    "title": "Analyse quinte Mardi 3 juin 2025",
+    "id": "1AJn-fu0xeA"
+  },
+  {
+    "title": "Analyse de mon budget par chat gpt",
+    "id": "A_D327ANaeg"
+  },
+  {
+    "title": "Toutes les dépenses en tableau et filtrable",
+    "id": "nU_iHHNgfWo"
+  },
+  {
+    "title": "Les meilleurs éleveurs au trot attelé",
+    "id": "rIFzMbGKTGg"
+  },
+  {
+    "title": "Analyse quinte lundi 2 juin 2025",
+    "id": "d20S4iyNSxY"
+  },
+  {
+    "title": "Analyse quinte dimanche 1 juin 2025",
+    "id": "CVDjNSMqtHU"
+  },
+  {
+    "title": "Explication de comment j ai ajouté les icônes sur les catégories",
+    "id": "1fUoRTr5oZA"
+  },
+  {
+    "title": "Avancement du projet de gestion de budget",
+    "id": "4RAIfukLbqI"
+  },
+  {
+    "title": "Analyse quinte samedi 31 mai 2025",
+    "id": "Q3eAAmISXrY"
+  },
+  {
+    "title": "Ajout des icônes sur les catégories de dépenses",
+    "id": "ABCAv5f6_Wk"
+  },
+  {
+    "title": "Analyse quinte vendredi 30 mai 2025",
+    "id": "fUP5VBeng0U"
+  },
+  {
+    "title": "Budget Bilan mai 2025",
+    "id": "014v5FPBIGw"
+  },
+  {
+    "title": "Analyse quinte jeudi 29 mai 2025",
+    "id": "8z9pPCI3hKM"
+  },
+  {
+    "title": "Analyse quinte Mercredi 28 mai 2025",
+    "id": "uQ2NN5tjGYI"
+  },
+  {
+    "title": "Avancement du projet de gestion de budget 27/05/2025",
+    "id": "b4r0K8DWkSg"
+  },
+  {
+    "title": "Développement en cours de la fonctionnalité d'ajout de ticket de caisse dans l'application de budget",
+    "id": "G7U5sN_S70U"
+  },
+  {
+    "title": "Analyse quinte mardi 27 mai 2025",
+    "id": "zG22TlsIAjY"
+  },
+  {
+    "title": "Analyse quinte lundi 26 mai 2025",
+    "id": "PnAd_B2FKtc"
+  },
+  {
+    "title": "Analyse quinte dimanche 25 mai 2025",
+    "id": "ENtZ4Y9FD0k"
+  },
+  {
+    "title": "Présentation de mon application de budget version de mai 2025",
+    "id": "nrulRmiz7wc"
+  },
+  {
+    "title": "Ajout de la progresse barre sur les enveloppes dans l'application de budget",
+    "id": "E9cuWhnZkuE"
+  },
+  {
+    "title": "Discussion chill sur mes projets",
+    "id": "vAOMeSxpdKA"
+  },
+  {
+    "title": "Budget mai 2025",
+    "id": "mmySJ_CmVQQ"
+  },
+  {
+    "title": "Analyse quinte jeudi 22 mai 2025",
+    "id": "u1pC9d33UnU"
+  },
+  {
+    "title": "Analyse quinte mercredi 21 mai 2025",
+    "id": "mpUF20TlqGo"
+  },
+  {
+    "title": "Analyse quinte mardi 20 mai 2025",
+    "id": "T6G_F9Qo9H0"
+  },
+  {
+    "title": "On code le système des enveloppes dans mon application de budget",
+    "id": "0ZH4eHTsT-M"
+  },
+  {
+    "title": "Application de budget avec enveloppe, dépense et revenue",
+    "id": "61q7aL9lphE"
+  },
+  {
+    "title": "Avancement de la gestion de budget on peut maintenant mettre des revenus entiers",
+    "id": "LRk1Rl_Y-QM"
+  },
+  {
+    "title": "Analyse quinte samedi 17 mai 2025",
+    "id": "pCAQsBx2BqI"
+  },
+  {
+    "title": "Budget deuxième semaine de mai 2025",
+    "id": "CjT4a1RIync"
+  },
+  {
+    "title": "Avancement de mon projet d'application de budget",
+    "id": "-bKgZv2-5_A"
+  },
+  {
+    "title": "Retour plus fort que jamais",
+    "id": "sJ2fHJNpu9U"
+  },
+  {
+    "title": "Budget première semaine de mai 2025",
+    "id": "k7ZsEgFtUSE"
+  },
+  {
+    "title": "Analyse quinte dimanche  4 mai 2025",
+    "id": "LeARUA-ZoPM"
+  },
+  {
+    "title": "Analyse quinte samedi 3 mai 2025",
+    "id": "-OTuBVf1o54"
+  },
+  {
+    "title": "Analyse quinte vendredi 2 mai 2025",
+    "id": "vaTrok06LFg"
+  },
+  {
+    "title": "Analyse quinte jeudi 1 mai 2025",
+    "id": "TtWeE_ZRcvg"
+  },
+  {
+    "title": "Budget avril 2025",
+    "id": "1Qd6hxjDuEA"
+  },
+  {
+    "title": "Analyse quinte Mercredi 30 avril 2025",
+    "id": "0H1ols-_HYQ"
+  },
+  {
+    "title": "Analyse quinte Mardi 29 avril 2025",
+    "id": "QwAfjsUEPVI"
+  },
+  {
+    "title": "Analyse quinte Lundi 28 avril 2025",
+    "id": "AlWQFc3-CAo"
+  },
+  {
+    "title": "Analyse quinte dimanche 27 avril 2025",
+    "id": "Ai9TGWdO5l4"
+  },
+  {
+    "title": "Analyse quinte samedi 26 avril 2025",
+    "id": "5VWjSQ6p1gA"
+  },
+  {
+    "title": "Analyse quinte vendredi 25 avril 2025",
+    "id": "VwFI8VVDpDA"
+  },
+  {
+    "title": "Analyse quinte mercredi 16 avril 2025",
+    "id": "Cd0iIo0PhqM"
+  },
+  {
+    "title": "Analyse quinte mardi 15 avril 2025",
+    "id": "DWq4tfmcvUg"
+  },
+  {
+    "title": "Analyse quinte lundi 14 avril 2025",
+    "id": "VyBWaQDbCqE"
+  },
+  {
+    "title": "Analyse quinte dimanche 13 avril 2025",
+    "id": "naLWclxBQGE"
+  },
+  {
+    "title": "Analyse quinte samedi 12 avril 2025",
+    "id": "MtduLvtcDhA"
+  },
+  {
+    "title": "Analyse quinte vendredi 11 avril 2025",
+    "id": "NkrhaX9kLgw"
+  },
+  {
+    "title": "Budget 2eme semaine avril 2025",
+    "id": "g9D1VADUYSs"
+  },
+  {
+    "title": "Analyse quinte jeudi 10 avril 2025",
+    "id": "L7-VAANvNTk"
+  },
+  {
+    "title": "Analyse quinte mercredi 9 avril 2025",
+    "id": "jIkjjqTC-JU"
+  },
+  {
+    "title": "Analyse quinte Mardi 8 avril 2025",
+    "id": "yWG4nSgy0pE"
+  },
+  {
+    "title": "Analyse quinte lundi 7 avril 2025",
+    "id": "BNGkQaX5HAM"
+  },
+  {
+    "title": "Analyse quinte dimanche 6 avril 2025",
+    "id": "92UQnSab3QY"
+  },
+  {
+    "title": "Budget première semaine d'avril 2025",
+    "id": "kHE-55WHDv8"
+  },
+  {
+    "title": "Analyse quinte Samedi 5 avril 2025",
+    "id": "qjm7pFQstiw"
+  },
+  {
+    "title": "Présentation de ce que j'ai fait sur le front de mon application de budget",
+    "id": "7I_ZtBv1JcI"
+  },
+  {
+    "title": "Analyse quinte vendredi 4 avril 2025",
+    "id": "WfAFcl1oK60"
+  },
+  {
+    "title": "Analyse quinte jeudi 3 avril 2025",
+    "id": "0jBcZ33M-NU"
+  },
+  {
+    "title": "Analyse quinte mercredi 2 avril 2025",
+    "id": "uZuTq_8wnYE"
+  },
+  {
+    "title": "Coda apprend à coder",
+    "id": "yMaEzez-PLo"
+  },
+  {
+    "title": "Analyse quinte mardi 1er avril 2025",
+    "id": "S8cXpvG_LCE"
+  },
+  {
+    "title": "Comment faire son papier au quinte + grâce au statistique",
+    "id": "GD3rRmnTLCg"
+  },
+  {
+    "title": "Analyse quinte lundi 31 mars 2025",
+    "id": "8sm2oVYYI6w"
+  },
+  {
+    "title": "Mon blog version 2025 je continue à le coder",
+    "id": "Bqp-hVEpvck"
+  },
+  {
+    "title": "Analyse quinte dimanche 30 mars 2025",
+    "id": "EMDuVWYSJg8"
+  },
+  {
+    "title": "Une application de budget pour tous",
+    "id": "DqHbzg5LK5c"
+  },
+  {
+    "title": "Tuto git sur intellij niveau avancé",
+    "id": "bGf7lw9tiJk"
+  },
+  {
+    "title": "Analyse quinte samedi 29 mars 2025",
+    "id": "U9Zb9t88SxU"
+  },
+  {
+    "title": "Budget de mars 2025",
+    "id": "3-nCAC6z6d8"
+  },
+  {
+    "title": "Analyse quinte vendredi 28 mars 2025",
+    "id": "XBJ88ROi9H0"
+  },
+  {
+    "title": "Analyse quinte jeudi 27 mars 2025",
+    "id": "kHVGjxTHFSc"
+  },
+  {
+    "title": "Plein de détails pour la course de quinte de mercredi 26 mars 2025",
+    "id": "2XkiNoXZ3AE"
+  },
+  {
+    "title": "Analyse quinte Mercredi 26 mars 2025",
+    "id": "RUaBWS-yadQ"
+  },
+  {
+    "title": "Analyse quinte Mardi 25 mars 2025",
+    "id": "hJf7wHdzwlA"
+  },
+  {
+    "title": "Analyse quinte lundi 24 mars 2025",
+    "id": "95WDNBEZeJU"
+  },
+  {
+    "title": "Nouveau graphique dépenses par mois par catégorie",
+    "id": "b0xIaIOCD2w"
+  },
+  {
+    "title": "Analyse quinte de dimanche 23 mars 2025",
+    "id": "-kGOiBW_Xjs"
+  },
+  {
+    "title": "Budget 3 eme semaine de mars 2025",
+    "id": "Rj2AQeRygnc"
+  },
+  {
+    "title": "Analyse quinte samedi 22 mars 2025",
+    "id": "wjnnSVcoiCU"
+  },
+  {
+    "title": "Analyse quinte vendredi 21 mars 2025",
+    "id": "jycAxmcncqk"
+  },
+  {
+    "title": "Analyse quinte jeudi 20 mars 2025",
+    "id": "LTvPyhCkD1w"
+  },
+  {
+    "title": "Application de budget nouvel export excel",
+    "id": "R5K3kiUYY_o"
+  },
+  {
+    "title": "Pouvoir déplacer son visage sur les miniatures you tube",
+    "id": "4jNzyksoxgY"
+  },
+  {
+    "title": "Analyse quinte Mercredi 19 mars 2025",
+    "id": "Df_A0VF2Ijg"
+  },
+  {
+    "title": "Mes pensées de dimanche 16 mars 2025",
+    "id": "IXDUtP9UHCY"
+  },
+  {
+    "title": "Avancement de l'application de gestion de budget",
+    "id": "Ex_wkPgDSxA"
+  },
+  {
+    "title": "Analyse quinte Mardi 18 mars 2025",
+    "id": "m7mOY2Xve8E"
+  },
+  {
+    "title": "Enfin un saas simple de miniature you tube",
+    "id": "8umKyha2ArU"
+  },
+  {
+    "title": "Je crée un mini saas de miniature you tube",
+    "id": "LmiSq2uUWWs"
+  },
+  {
+    "title": "Analyse quinte lundi 17 mars 2025",
+    "id": "4OFmB9NBBoc"
+  },
+  {
+    "title": "Analyse quinte Dimanche 16 mars 2025",
+    "id": "wcDH8OV0N4w"
+  },
+  {
+    "title": "Quinte analyse Samedi 15 mars 2025",
+    "id": "_vrHGCH8FMs"
+  },
+  {
+    "title": "Analyse quinte vendredi 14 mars 2025",
+    "id": "P_VKO58e1w0"
+  },
+  {
+    "title": "Je vais crée mon programme pour mes miniatures you tube",
+    "id": "z24a6ZIWPhg"
+  },
+  {
+    "title": "Budget de la deuxième semaine de mars 2025",
+    "id": "5x1F1Qfb21Q"
+  },
+  {
+    "title": "Quinte pmu jeudi 13 mars 2025",
+    "id": "0JtLGpQPrls"
+  },
+  {
+    "title": "Site de poésie",
+    "id": "OiYTzMYHktM"
+  },
+  {
+    "title": "Quinte pmu mercredi 12 mars 2025",
+    "id": "iS1OdJX6JAE"
+  },
+  {
+    "title": "Quinte pmu mardi 11 mars 2025",
+    "id": "0owY5_CqzLU"
+  },
+  {
+    "title": "Quinte pmu lundi 10 mars 2025",
+    "id": "aOWZAM2TbHw"
+  },
+  {
+    "title": "Quinte Dimanche 9 mars 2025",
+    "id": "9diU1Lv1Ohk"
+  },
+  {
+    "title": "Histoire touchante",
+    "id": "05_R5cI4vA0"
+  },
+  {
+    "title": "Analyse quinte samedi 8 mars 2025",
+    "id": "V3UjuzCWdIk"
+  },
+  {
+    "title": "Analyse de quinte pmu du 7 mars 2025",
+    "id": "AUJKaZCtTkI"
+  },
+  {
+    "title": "Budget 1 ere semaine de mars 2025",
+    "id": "5RuN_rLTD7g"
+  },
+  {
+    "title": "Pronostic quinte Jeudi 6 mars 2025",
+    "id": "VptsRzRUT-k"
+  },
+  {
+    "title": "Pronostic quinte Mercredi 5 mars 2025",
+    "id": "MayQawCQT1Y"
+  },
+  {
+    "title": "Découvrez Les Projets Pour Tous",
+    "id": "Fu2BEDiI_6M"
+  },
+  {
+    "title": "Analyse Pmu du Mardi 4 mars 2025",
+    "id": "pA3jeaFeZp0"
+  },
+  {
+    "title": "Analyse quinte Pmu lundi 3 mars 2025",
+    "id": "rVyrGZucT8E"
+  },
+  {
+    "title": "Troisieme course paris simple du 02 03 2025",
+    "id": "JwFGaF-FlcU"
+  },
+  {
+    "title": "Paris simple deuxième course 02 03 2025",
+    "id": "oGcIHSo0fdY"
+  },
+  {
+    "title": "Paris simple du 02 03 2025 premier paris",
+    "id": "CMEoWYDlp0E"
+  },
+  {
+    "title": "Le retour de moi même plus sage et plus positif",
+    "id": "NF5JIi01hEA"
+  },
+  {
+    "title": "Analyse de la course pmu du Dimanche 2 mars 2025",
+    "id": "0cmAXyK8LYU"
+  },
+  {
+    "title": "Projet 2025 coder un chat multi canaux",
+    "id": "O4AcnOwIi40"
+  },
+  {
+    "title": "Évolution de l'application de budget depuis le début jusqu'à maintenant",
+    "id": "zjyoShH8ubg"
+  },
+  {
+    "title": "On code un mini pokemon grâce à chat gpt",
+    "id": "oAk7ZWeJ7i0"
+  },
+  {
+    "title": "Budget prévisionnel pour mars 2025",
+    "id": "f4u17wZBxyo"
+  },
+  {
+    "title": "Budget de février la dernière semaine",
+    "id": "f60tir9O_As"
+  },
+  {
+    "title": "Analyse de mes données de dépenses mensuelles",
+    "id": "lKdoK0gvIEw"
+  },
+  {
+    "title": "Mes pensées du 23/02/2025",
+    "id": "N21GUkzQnhw"
+  },
+  {
+    "title": "Budget 3 eme semaine de fevrier 2025",
+    "id": "duEdJxlvriA"
+  },
+  {
+    "title": "Meilleur moment paris simple 16/02/2025",
+    "id": "3dXcu35KZSo"
+  },
+  {
+    "title": "Paris simple sur zeturf du 16/02/2025",
+    "id": "jTNOYvi5Qk4"
+  },
+  {
+    "title": "Défi des 100 enveloppes petite application",
+    "id": "iDFZ5Jf1hGM"
+  },
+  {
+    "title": "Ajout de l'export pdf de l'ensemble des bilans mensuels par catégorie",
+    "id": "ZwkANz0x5WE"
+  },
+  {
+    "title": "Bilan mensuel pour toutes les dépenses application de budget",
+    "id": "dnj88XRNcsA"
+  },
+  {
+    "title": "Budget pour la 2 eme semaine de février 2025",
+    "id": "OPxZ3r5e7XY"
+  },
+  {
+    "title": "Application de budget par enveloppe Version 7",
+    "id": "GVmIN_LNO9k"
+  },
+  {
+    "title": "Générateur de factures",
+    "id": "5j24Xt30p0o"
+  },
+  {
+    "title": "Budget 1 ere semaine de février 2025",
+    "id": "BO6lTXTyf7A"
+  },
+  {
+    "title": "Application de gestion de candidature",
+    "id": "n6vU_asxugw"
+  },
+  {
+    "title": "Quinte analyse du mardi 4 février 2025",
+    "id": "A9CeKARAamY"
+  },
+  {
+    "title": "Séance de Paris simples sur Zeturf du 02/02/2025",
+    "id": "G70LVhqv-OQ"
+  },
+  {
+    "title": "Budget par enveloppe version 6",
+    "id": "CS-9fNN7JwE"
+  },
+  {
+    "title": "Application de budget nouvelle version",
+    "id": "vfD40iQGwNA"
+  },
+  {
+    "title": "PC vs Mac  Le Duel Éternel !",
+    "id": "MwSaGJisVik"
+  },
+  {
+    "title": "Maîtrisez Git   Guide Complet pour Débutant",
+    "id": "GHt9IdpNJhc"
+  },
+  {
+    "title": "Budget pour la cinquième semaine de Janvier 2025",
+    "id": "Xi7SqRTgY3c"
+  },
+  {
+    "title": "Paris hippique  jeu simple",
+    "id": "PxD8RjWYxO4"
+  },
+  {
+    "title": "Budget pour la 4 eme semaine de janvier",
+    "id": "0DRyigTr9Uw"
+  },
+  {
+    "title": "Marche au parc André Malraux",
+    "id": "m3D9B2MJkoA"
+  },
+  {
+    "title": "Début de la version macro excel pour budget par enveloppe",
+    "id": "XwSvtEPbWAU"
+  },
+  {
+    "title": "Comment Analyser les Courses de PMU",
+    "id": "GR_4QR2aBfI"
+  },
+  {
+    "title": "Gérez votre budget efficacement",
+    "id": "p_5UZYos3p8"
+  },
+  {
+    "title": "Budget par enveloppe version 5",
+    "id": "Q_m4zvw6Idg"
+  },
+  {
+    "title": "Budget par enveloppe Version 4",
+    "id": "GlJE2kB0Bss"
+  },
+  {
+    "title": "Une application metéo?  voici le code.",
+    "id": "bTjruSoBRLw"
+  },
+  {
+    "title": "Peut on gagner en jouant les grosses cotes au pmu sur zeturf ?",
+    "id": "98H72uWV7hE"
+  },
+  {
+    "title": "Budget pour la 3 eme semaine de Janvier",
+    "id": "cS_2ZpDqXzw"
+  },
+  {
+    "title": "Ma stratégie de gain au pmu sur zeturf",
+    "id": "UjPcrTSx9Y4"
+  },
+  {
+    "title": "Application simple de prise de note",
+    "id": "fPGdvCTE4mg"
+  },
+  {
+    "title": "Système des enveloppes ajout des graphiques",
+    "id": "Mnp4e18QKf8"
+  },
+  {
+    "title": "Application de système par enveloppe, ajout des imports excel et export excel et pdf",
+    "id": "sw3rmpO5gwk"
+  },
+  {
+    "title": "Application de budget par enveloppe",
+    "id": "mYwKXi_1D3Y"
+  },
+  {
+    "title": "budget 2 eme semaine de janvier 2025",
+    "id": "THGxQbABP_U"
+  },
+  {
+    "title": "Qu'est ce qu'une API REST pour les novices?",
+    "id": "dbsMkQuQ2nY"
+  },
+  {
+    "title": "Conseils pour Développer une Nouvelle compétence",
+    "id": "22fKPCcdUNI"
+  },
+  {
+    "title": "Suivre les prix des cartes magic facilement",
+    "id": "NVH0p4PbFps"
+  },
+  {
+    "title": "Trackeur de prix de cardmarket sur magic avec des tendances des staples",
+    "id": "V-yYHBsHQGE"
+  },
+  {
+    "title": "Astuces pour bien gérer son budget",
+    "id": "eFcHj6Y51Yc"
+  },
+  {
+    "title": "Budget 1ere semaine de janvier 2025",
+    "id": "Nku5GUVofM8"
+  },
+  {
+    "title": "Cours complet sur les tris simple en algorithmie",
+    "id": "o6nIBX40INs"
+  },
+  {
+    "title": "Comprendre les réseaux de neurones",
+    "id": "WiNBw5180sQ"
+  },
+  {
+    "title": "Comment fonctionne Node js   Event Loop",
+    "id": "ZBgNWmsf2a8"
+  },
+  {
+    "title": "Les 10 meilleurs langages de programmation",
+    "id": "f8ADFCpDC1U"
+  },
+  {
+    "title": "20 idées de projets web à réaliser",
+    "id": "Tw4e9Lr8scQ"
+  },
+  {
+    "title": "Budget pour la quatrième semaine de décembre 2024",
+    "id": "hRCqFAh1WSM"
+  },
+  {
+    "title": "10 avantages Surprenants d’apprendre à Coder",
+    "id": "iVpDZEqvPzQ"
+  },
+  {
+    "title": "10 conseils pour apprendre efficacement",
+    "id": "-GknJPRo8x0"
+  },
+  {
+    "title": "Budget 3 eme semaine de décembre",
+    "id": "v6HXkPxT1Lc"
+  },
+  {
+    "title": "Le Geek qui préfère coder que sortir",
+    "id": "-MvozxhNKXU"
+  },
+  {
+    "title": "Comprendre le Design Pattern Factory",
+    "id": "GbNycMhP-pg"
+  },
+  {
+    "title": "Petite sortie sur Paris",
+    "id": "4PcVGdoRO5o"
+  },
+  {
+    "title": "J'ai codé un convertisseur scientifique",
+    "id": "UOxhF9J6y5s"
+  },
+  {
+    "title": "Budget Deuxième semaine décembre 2024",
+    "id": "RrRsB3n1kcY"
+  },
+  {
+    "title": "Les principes SOLID expliqués",
+    "id": "hmv0dRqG1_c"
+  },
+  {
+    "title": "Petite marche à la Défense",
+    "id": "6IFAkmoivTc"
+  },
+  {
+    "title": "Comprendre le Design Pattern Strategy",
+    "id": "-lyvOd2BRO8"
+  },
+  {
+    "title": "Comprendre les API",
+    "id": "jZz8Pwsqdag"
+  },
+  {
+    "title": "L'histoire fascinante du langage Java",
+    "id": "nedmxRRMiVM"
+  },
+  {
+    "title": "Multithreading in Java",
+    "id": "fLi10zeZQBQ"
+  },
+  {
+    "title": "Comprendre les Enums en Java",
+    "id": "oUvhbBt6MN4"
+  },
+  {
+    "title": "Comprendre l'héritage en Java",
+    "id": "ACA3kiAV_iw"
+  },
+  {
+    "title": "Introduction aux Interfaces Fonctionnelles",
+    "id": "VhAxrCUGIRY"
+  },
+  {
+    "title": "Comprendre les Interfaces en Java",
+    "id": "1wMak8pB-j0"
+  },
+  {
+    "title": "Cours d'accessibilité en Java",
+    "id": "5r-yv5gna0M"
+  },
+  {
+    "title": "Comprendre le Binaire en Programmation",
+    "id": "70-GMMQoGQ4"
+  },
+  {
+    "title": "Comprendre les Objets en Programmation",
+    "id": "uJ36mpFdTOE"
+  },
+  {
+    "title": "Présentation de la chaine Dev et carte",
+    "id": "CFWCjNvXzFY"
+  },
+  {
+    "title": "Marche quotidienne au parc heller",
+    "id": "6_bGw2Z18UM"
+  },
+  {
+    "title": "Budget Première semaine de décembre 2024",
+    "id": "9Lyrn_vhaGk"
+  },
+  {
+    "title": "Marche du 4 décembre 2024 au parc Heller",
+    "id": "SarAzwgphRY"
+  },
+  {
+    "title": "Venez suivre l'avancé du projet de recette de cuisine",
+    "id": "P9511faKLBQ"
+  },
+  {
+    "title": "Petite marche seconde partie 02 12 2024",
+    "id": "MUOQN_iVtwc"
+  },
+  {
+    "title": "Petite marche du midi 02 12 2024",
+    "id": "bHUnztV8174"
+  },
+  {
+    "title": "Journée du 1 er décembre 2024",
+    "id": "6ToSaEiqVfw"
+  },
+  {
+    "title": "Avancement du projet de recettes de cuisine. On code la liste de course Episode 25",
+    "id": "Ow8hQEP3n4Q"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine Calendrier des recettes Episode 24",
+    "id": "6vX5mqyXkK0"
+  },
+  {
+    "title": "Marche du matin",
+    "id": "GSIbQGefnNU"
+  },
+  {
+    "title": "Journal du vendredi 29 novembre 2024",
+    "id": "No26Yrml-5k"
+  },
+  {
+    "title": "Projet de la journée du 28/11/2024",
+    "id": "ZxIf7JEHLsM"
+  },
+  {
+    "title": "Exemple sur le polymorphisme en java",
+    "id": "XRrXA3CrfXc"
+  },
+  {
+    "title": "Journal du 27/11/2024",
+    "id": "XP7f2tUM0II"
+  },
+  {
+    "title": "Bilan budget Mois de Novembre 2024",
+    "id": "vi9VzXhcH4E"
+  },
+  {
+    "title": "Après le coiffeur",
+    "id": "eh58BcTGjV4"
+  },
+  {
+    "title": "Journal de la journée 26 novembre 2024",
+    "id": "Grz9yKeM-Q4"
+  },
+  {
+    "title": "Balade du matin parc heller",
+    "id": "nERy16_BlTs"
+  },
+  {
+    "title": "Linux face aux pirates",
+    "id": "Kf2wy2v_0Gs"
+  },
+  {
+    "title": "JavaScript / TypeScript  The alien attack",
+    "id": "NZMNL5hvA5s"
+  },
+  {
+    "title": "Mon combat contre les ordinateurs",
+    "id": "0LB3Eos_m3M"
+  },
+  {
+    "title": "Je crée un jeu 2d grâce à une IA",
+    "id": "fSgh0_BK6z0"
+  },
+  {
+    "title": "Générateur de cv, on fait le plus beau cv",
+    "id": "RfwJmgzkmnk"
+  },
+  {
+    "title": "Générateur de cv, on fait le cv de toto",
+    "id": "OqFtzuQMy70"
+  },
+  {
+    "title": "Budget 4 eme semaine de Novembre 2024",
+    "id": "eiUX94nS2cM"
+  },
+  {
+    "title": "Mon nouveau portfolio développeur 2024",
+    "id": "mnagxSW68Aw"
+  },
+  {
+    "title": "Jeu du pendu",
+    "id": "jyX6l30QGRE"
+  },
+  {
+    "title": "Génération de CV facile et simple",
+    "id": "JHJ-OAyFYd8"
+  },
+  {
+    "title": "Mes futurs projets que je veux faire",
+    "id": "E5eUC_Vg0C8"
+  },
+  {
+    "title": "Bilan des deux premières semaines de novembre 2024",
+    "id": "j3zJ9RNbayU"
+  },
+  {
+    "title": "Bilan sur mon application de recette de cuisine MVP",
+    "id": "qMAWJhwNglc"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine, pouvoir choisir sa photo de recette Episode 23",
+    "id": "ReioxRRQLjY"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine Episode 22",
+    "id": "xxbxhprcw4Q"
+  },
+  {
+    "title": "Avancement du projet de recettes de cuisine filtre sur les recettes Episode 21",
+    "id": "lzCFLY9fcTI"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine affichage des recettes en modale Episode 20",
+    "id": "ecMomPMDxd8"
+  },
+  {
+    "title": "Avancement du projet d'application de Recettes de cuisine Episode 19",
+    "id": "lKRv03ebXRM"
+  },
+  {
+    "title": "Avancement du projet de recettes de cuisine vérification et validation d'email Episode 18",
+    "id": "aDlaOVZw4Ak"
+  },
+  {
+    "title": "Avancement du projet de recettes de cuisine menu déroulant Episode 17",
+    "id": "y_oMy2xXA8g"
+  },
+  {
+    "title": "Budget d'octobre 2024 je fais le bilan",
+    "id": "PkUFrHE6jGY"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine on fait le footer Episode 16",
+    "id": "sWRJSgRrV1A"
+  },
+  {
+    "title": "Avancement projet de recettes de cuisine Un peu de style Episode 15",
+    "id": "Dy8HOznVytM"
+  },
+  {
+    "title": "Avancement du projet de recettes de cuisine calcul des calories Episode 14",
+    "id": "XWkaLkAV9XU"
+  },
+  {
+    "title": "Déploiement de la version 1 de l'application de recettes Episode 13",
+    "id": "fyWt_XbRYPg"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine cout total des recettes Episode 12",
+    "id": "5o0XN1a1Nmg"
+  },
+  {
+    "title": "Avancement du projet de Recette de cuisine Connexion via Google Episode 11",
+    "id": "gUKxqpy7TaM"
+  },
+  {
+    "title": "Avancement de mon projet de recette de cuisine Episode 10",
+    "id": "rvUMR0GM2Lc"
+  },
+  {
+    "title": "Avancement du projet d'application de cuisine Episode 9",
+    "id": "rCY6KW02Ju0"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine Episode 8",
+    "id": "F4d2iRk90_k"
+  },
+  {
+    "title": "On fait le visuel des recettes sur l'application Episode 7",
+    "id": "ddPTuBMyNiI"
+  },
+  {
+    "title": "Rapport quinte Jeudi 24 octobre 2024 avec des détails",
+    "id": "qKPA9SEPXZQ"
+  },
+  {
+    "title": "Avancement du projet d'application de cuisine Episode 6",
+    "id": "2lmw6Pf7L9A"
+  },
+  {
+    "title": "Rapport quinte Mercredi 23 octobre 2024 avec des détails",
+    "id": "BUoaAcG0XOg"
+  },
+  {
+    "title": "Avancement du projet d'application de cuisine Episode 5",
+    "id": "MK6TXCPwrKg"
+  },
+  {
+    "title": "Rapport quinte Mardi 22 octobre 2024",
+    "id": "3WGt1uXmvUo"
+  },
+  {
+    "title": "Avancement du projet de l'application de cuisine présentation du code Episode 4",
+    "id": "dcySQ-dNClY"
+  },
+  {
+    "title": "Avancement du projet de recette de cuisine Episode 3",
+    "id": "F6ADq_9yjTE"
+  },
+  {
+    "title": "Avancement du projet d'application de recette de cuisine Épisode 2",
+    "id": "_IaAzXNLfis"
+  },
+  {
+    "title": "Rapport quinte Lundi 21 octobre 2024",
+    "id": "9pgTWAKZS7A"
+  },
+  {
+    "title": "Rapport quinte Dimanche 20 octobre avec plein de détails",
+    "id": "0Bqp0I0hNSk"
+  },
+  {
+    "title": "Début de code d'une application de cuisine Episode 1",
+    "id": "3OvtNHCSS70"
+  },
+  {
+    "title": "Budget 3e semaine d'octobre 2024",
+    "id": "vIZZ-Efz5YY"
+  },
+  {
+    "title": "Rapport quinte samedi 19 octobre 2024",
+    "id": "pR3svw0Oflo"
+  },
+  {
+    "title": "Rapport quinte Vendredi 18 octobre 2024 avec plein de détails",
+    "id": "WU3WP-unpis"
+  },
+  {
+    "title": "Rapport quinte jeudi 17 octobre 2024",
+    "id": "vD0W65Q07Ig"
+  },
+  {
+    "title": "On améliore le projet de générateur de Cv et j explique un peu plus le code",
+    "id": "sW8o7e2GcAY"
+  },
+  {
+    "title": "Rapport quinte Mercredi 16 octobre 2024",
+    "id": "_DaqrLucxAc"
+  },
+  {
+    "title": "Rapport quinte Mardi 15 octobre 2024 avec plein de détails",
+    "id": "dFkwVhO_WTk"
+  },
+  {
+    "title": "Déploiement pour faire un mini saas gratuit de générateur de cv",
+    "id": "jKXMaJdKMDs"
+  },
+  {
+    "title": "Rapport quinte lundi 14 octobre 2024 avec plein de détails",
+    "id": "CiovhVaGd4g"
+  },
+  {
+    "title": "Générateur de Cv avec le code du programme",
+    "id": "Bw2IJN10Ink"
+  },
+  {
+    "title": "Bilan de mon suivi de dépenses entre septembre 2023 et octobre 2024",
+    "id": "ftnKo_eOy70"
+  },
+  {
+    "title": "Rapport quinte Dimanche 13 octobre 2024 avec plein de détails",
+    "id": "4SFFpXLkTJw"
+  },
+  {
+    "title": "Rapport quinte Samedi 12 octobre 2024 avec plein de détails",
+    "id": "4xqPVTRS_Kk"
+  },
+  {
+    "title": "Budget de la deuxième semaine d'octobre 2024",
+    "id": "acj4GYIaCFg"
+  },
+  {
+    "title": "Rapport quinte Vendredi 11 octobre 2024 avec plein de détail",
+    "id": "tLQ_dpRhgMI"
+  },
+  {
+    "title": "Rapport quinte du jeudi 10 octobre 2024 avec plein de détails",
+    "id": "MrajyCad_Uo"
+  },
+  {
+    "title": "Rapport quinte Mercredi 9 octobre 2024 avec plein de détails",
+    "id": "GfAT3sslgOg"
+  },
+  {
+    "title": "Rapport quinte du Mardi 8 octobre 2024 avec plein de détails",
+    "id": "xsS7fLBCJNs"
+  },
+  {
+    "title": "Mon budget pour la première semaine d'octobre 2024",
+    "id": "IdV4aV1agI8"
+  },
+  {
+    "title": "Rapport quinte Samedi 5 octobre 2024",
+    "id": "8b9ZQZcFeTs"
+  },
+  {
+    "title": "Rapport Vendredi 4 octobre 2024",
+    "id": "HU2fIX1TYYg"
+  },
+  {
+    "title": "Rapport quinte Jeudi 3 octobre 2024",
+    "id": "Tgam6bhswsQ"
+  },
+  {
+    "title": "Rapport quinte Mercredi 2 octobre 2024",
+    "id": "dSexL8DtoLE"
+  },
+  {
+    "title": "Rapport quinte Mardi 1 octobre 2024",
+    "id": "uG90v99M4uI"
+  },
+  {
+    "title": "Rapport quinte Lundi 30 septembre 2024",
+    "id": "im3K9wL3hdQ"
+  },
+  {
+    "title": "Exposé sur la création de l'ordinateur",
+    "id": "Bu4HRiJDyFg"
+  },
+  {
+    "title": "Rapport quinte Dimanche 29 septembre 2024",
+    "id": "ahsXjv37-Sw"
+  },
+  {
+    "title": "Rapport quinte Samedi 28 septembre 2024",
+    "id": "yldcU9zRS8I"
+  },
+  {
+    "title": "Mon budget pour la quatrième semaine de septembre",
+    "id": "TWGe_tChWTQ"
+  },
+  {
+    "title": "Rapport quinte Vendredi 27 septembre 2024",
+    "id": "Wyqc3qBF5R8"
+  },
+  {
+    "title": "Rapport quinte Jeudi 26 septembre 2024",
+    "id": "BiB4I-sLRIg"
+  },
+  {
+    "title": "Rapport quinte Mercredi 25 septembre 2024",
+    "id": "AgM0tOoD3jc"
+  },
+  {
+    "title": "Rapport quinte Mardi 24 septembre 2024",
+    "id": "HdZCUPbAkdY"
+  },
+  {
+    "title": "Petit exemple de vidéo généré avec mon programme de montage vidéo.",
+    "id": "acXxEwuADDM"
+  },
+  {
+    "title": "Création de vidéo à partir d'image et de texte début du service web",
+    "id": "-nGfKBu3EZU"
+  },
+  {
+    "title": "Rapport quinte Lundi 23 septembre 2024",
+    "id": "MwB8RCfOvGs"
+  },
+  {
+    "title": "Rapport quinte Dimanche 22 septembre 2024",
+    "id": "1jBVXYa2G18"
+  },
+  {
+    "title": "Mes dépenses pour après la 3ème semaine de septembre 2024",
+    "id": "tRKC1Vt4CA8"
+  },
+  {
+    "title": "Partager ses dépenses avec qui on veut partout dans le monde",
+    "id": "QbJ3DK97pI4"
+  },
+  {
+    "title": "Rapport quinte Samedi 20 septembre 2024",
+    "id": "_gPaXARB2uw"
+  },
+  {
+    "title": "Rapport quinte du Vendredi 20 septembre 2024",
+    "id": "X9PBDSqH2sQ"
+  },
+  {
+    "title": "Rapport quinte jeudi 19 septembre 2024",
+    "id": "Syht3HGkj4o"
+  },
+  {
+    "title": "Rapport quinte Mercredi 18 septembre 2024",
+    "id": "4fs701DZ6A0"
+  },
+  {
+    "title": "Rapport quinte Mardi 17 septembre 2024",
+    "id": "dLnSPkRad4U"
+  },
+  {
+    "title": "Rapport quinte Lundi 16 septembre 2024",
+    "id": "HueM3hgkdK0"
+  },
+  {
+    "title": "Rapport quinte Dimanche 15 septembre 2024",
+    "id": "h_O086UvKpU"
+  },
+  {
+    "title": "Mes dépenses des deux semaines de septembre",
+    "id": "Jmk7kHT9pGk"
+  },
+  {
+    "title": "Coding game Calculer le produit de tous les chiffres d'un nombre",
+    "id": "ZlRTLImp_yI"
+  },
+  {
+    "title": "Rapport quinte Mercredi 11 septembre 2024",
+    "id": "adfjaSp5r4Q"
+  },
+  {
+    "title": "Rapport quinte Mardi 10 septembre 2024",
+    "id": "oNIcLCG76T8"
+  },
+  {
+    "title": "Aout de la fonctionnalité agenda événement dans ma gestion de budget",
+    "id": "z99_iSjgypA"
+  },
+  {
+    "title": "Ajout de la fonctionnalité de l'ensemble des filtres sur mes dépenses",
+    "id": "8LIFRLlSAP0"
+  },
+  {
+    "title": "Ajout de la fonctionnalité de toutes les dépenses dans mon application de gestion de budget",
+    "id": "6TAeADBDHSo"
+  },
+  {
+    "title": "Je code ma version d'un jeu connu grâce à chat gpt",
+    "id": "6SOjBx28NwQ"
+  },
+  {
+    "title": "Rapport quinte Mardi 27 aout 2024",
+    "id": "bMjvFJoRflo"
+  },
+  {
+    "title": "Présentation de mon application  web de gestion de budget",
+    "id": "-BccOu30360"
+  },
+  {
+    "title": "Rapport quinte Samedi 24 aout 2024",
+    "id": "UaftZfvUpaE"
+  },
+  {
+    "title": "Ma collection hearthstone",
+    "id": "nWyIK7cYgu4"
+  },
+  {
+    "title": "Rapport quinte 23 Aout 2024 fiche de chaque chevaux",
+    "id": "CBwwNyqyPYE"
+  },
+  {
+    "title": "Rapport quinte Jeudi 22 Aout 2024 avec plein de détails",
+    "id": "WdkbgCZI-7A"
+  },
+  {
+    "title": "Rapport quinte Mercredi 21 aout avec plein de détails",
+    "id": "0bGugyzK7bU"
+  },
+  {
+    "title": "Rapport quinte Mardi 20 Aout 2024 avec plein de détails",
+    "id": "JypNqy96p4U"
+  },
+  {
+    "title": "Rapport quinte Lundi 19 aout 2024",
+    "id": "6qFSzjCAKsQ"
+  },
+  {
+    "title": "Coder un agenda grâce à chat gpt",
+    "id": "Npch5YKjbeA"
+  },
+  {
+    "title": "Rapport quinte Mercredi 14 aout 2024",
+    "id": "Wi-DM10d0Ec"
+  },
+  {
+    "title": "Rapport quinte Mardi 13 aout 2024",
+    "id": "5tJwJ4mw3eI"
+  },
+  {
+    "title": "Rapport quinte Lundi 12 Aout 2024",
+    "id": "Rihp2oD0PTs"
+  },
+  {
+    "title": "Rapport quinte dimanche 11 Aout 2024",
+    "id": "gEt1b_0m4Go"
+  },
+  {
+    "title": "Comment faire des vidéos automatiquement à partir d'un script node js",
+    "id": "CDU1sKZAauI"
+  },
+  {
+    "title": "Rapport quinte jeudi 8 aout 2024",
+    "id": "8Nw2dJRceEU"
+  },
+  {
+    "title": "Rapport quinte Mercredi 7 Août 2024",
+    "id": "8X0q0lLDRdg"
+  },
+  {
+    "title": "Rapport quinte Mardi 6 Aout 2024",
+    "id": "sezMDlCOCJY"
+  },
+  {
+    "title": "Coding game racine a fois b",
+    "id": "gROqdIRZF1I"
+  },
+  {
+    "title": "Quelques résultats du quinte de Lundi 5 Août 2024",
+    "id": "sRLBuq4Qx6M"
+  },
+  {
+    "title": "Quelques résultats 2024 Dimanche 4 Août 2024",
+    "id": "p-m6il5T7SQ"
+  },
+  {
+    "title": "Quelques résultats du quinte de Samedi 3 Août 2024",
+    "id": "8K9p7ZhhLHE"
+  },
+  {
+    "title": "Quelques résultats 2024 du quinte de Vendredi 2 Août 2024",
+    "id": "k1v14QOmniw"
+  },
+  {
+    "title": "Quelques résultats du quinte de Jeudi 1 août 2024",
+    "id": "FT40zhV8NDA"
+  },
+  {
+    "title": "Quelques résultats 2024 du quinte de Mercredi 31 juillet 2024",
+    "id": "_CNl0mvFPps"
+  },
+  {
+    "title": "Rapport quinte du Mardi 30 juillet 2024",
+    "id": "m7Ee_VapTvs"
+  },
+  {
+    "title": "Quelques résultats du quinte de Mardi 30 juillet 2024",
+    "id": "0BHAovQai-Q"
+  },
+  {
+    "title": "Rapport quinte Lundi 29 Juillet 2024",
+    "id": "z2MCALqbAKo"
+  },
+  {
+    "title": "Quelques résultats 2024 du quinte de Lundi 29 juillet 2024",
+    "id": "zvhf1RvtSA4"
+  },
+  {
+    "title": "Rapport quinte Dimanche 28 Juillet 2024",
+    "id": "kXUb0dzZEWY"
+  },
+  {
+    "title": "Quelques résultats 2024 quinte Dimanche 28 Juillet 2024",
+    "id": "keDL6l2OFKk"
+  },
+  {
+    "title": "Quelques Résultats 2024 de Samedi 27 juillet 2024",
+    "id": "Kfed5nFB6D8"
+  },
+  {
+    "title": "Rapport quinte Samedi 27 juillet 2024",
+    "id": "RPk38pGF4fI"
+  },
+  {
+    "title": "Quelque Résultats 2024 des chevaux du quinte de vendredi 26 juillet 2024",
+    "id": "HM_nv6eOmS4"
+  },
+  {
+    "title": "Rapport quinte Vendredi 26 juillet 2024",
+    "id": "mj0m1BzaX-4"
+  },
+  {
+    "title": "Quelques résultats 2024 des chevaux de Jeudi 25 juillet 2024",
+    "id": "vxFwte1uuJs"
+  },
+  {
+    "title": "Quelques résultats 2024 des chevaux du quinte de Mercredi 24 juillet 2024",
+    "id": "IigGU9ASy4U"
+  },
+  {
+    "title": "Rapport quinte Jeudi 25 juillet 2024",
+    "id": "tZJsypcwCKA"
+  },
+  {
+    "title": "Rapport quinte Mercredi 24 juillet 2024",
+    "id": "25SHShMmXmg"
+  },
+  {
+    "title": "Quelques résultats 2024 du quinte de Lundi 22 juillet 2024",
+    "id": "KbyYtWf9P-4"
+  },
+  {
+    "title": "Rapport quinte Lundi 22 juillet 2024",
+    "id": "lh5rKGUiZ2o"
+  },
+  {
+    "title": "Mes conseils pour réussir financièrement",
+    "id": "CcHZw3EC0PY"
+  },
+  {
+    "title": "Analyse papier quinte du dimanche 21 juillet 2024, Résultat des chevaux en 2024",
+    "id": "fT6DvYOmJoU"
+  },
+  {
+    "title": "Kata diamant je m'entraine",
+    "id": "RE_tKHBKQ68"
+  },
+  {
+    "title": "Rapport quinte Dimanche 21 juillet 2024",
+    "id": "HhO6urpZmnY"
+  },
+  {
+    "title": "Rapport quinte Samedi 20 juillet 2024",
+    "id": "Og_T6VCXPVM"
+  },
+  {
+    "title": "Coding game convertir des heures et minutes en minutes",
+    "id": "UVlZ0Jyw_TQ"
+  },
+  {
+    "title": "Rapport quinte vendredi 19 juillet 2024",
+    "id": "SiKo2TNEJWA"
+  },
+  {
+    "title": "Rapport quinte jeudi 18 juillet 2024",
+    "id": "XDDPx6jIC6Q"
+  },
+  {
+    "title": "Coding game Reverse trouver le mot",
+    "id": "WDrpUavtnN0"
+  },
+  {
+    "title": "Coding game compter le nombre de happy par rapport au sad",
+    "id": "L1QnKNSNy2g"
+  },
+  {
+    "title": "Coding game chaine de caractères inversées en respectant la casse",
+    "id": "5gCBFfrc2aY"
+  },
+  {
+    "title": "Coding game Mode Reverse Calcul",
+    "id": "jkpQQyFa-Q8"
+  },
+  {
+    "title": "Rapport quinte Mercredi 17 juin 2024",
+    "id": "maPkQOuvhK4"
+  },
+  {
+    "title": "Rapport quinte Mardi 16 juillet 2024",
+    "id": "PS19dpgORxM"
+  },
+  {
+    "title": "Coding game reverse Pierre Feuille Ciseaux",
+    "id": "5Cg8_Gr1HW4"
+  },
+  {
+    "title": "Coding game calcul le plus rapide",
+    "id": "MuVwhSsgzqU"
+  },
+  {
+    "title": "Portfolio juillet 2024 Développeur Java et Typescript",
+    "id": "UK_gMbxLFEo"
+  },
+  {
+    "title": "Analyse du quinte de dimanche 14 juillet 2024",
+    "id": "mMm953apH8c"
+  },
+  {
+    "title": "Rapport des chevaux partants pour le quinte de Lundi 15 juillet 2024",
+    "id": "LaI5knmBU9A"
+  },
+  {
+    "title": "Rapport des chevaux partants pour le quinte de Dimanche 14 juillet 2024",
+    "id": "fa2tY1BOClU"
+  },
+  {
+    "title": "Utiliser you tube api v3 pour upload de video",
+    "id": "wKu9r5zXYVs"
+  },
+  {
+    "title": "Coding game mode reverse",
+    "id": "WgHSO-Pnf8Q"
+  },
+  {
+    "title": "Coding game concatener des resultats",
+    "id": "K0wT2jSg1SE"
+  },
+  {
+    "title": "Coding game triangle *** ** * * ** ***",
+    "id": "Qc5XXmZjnFI"
+  },
+  {
+    "title": "Coding game Calculer la différence absolue entre la somme des chiffres pairs et impairs d'un nombre",
+    "id": "8pIxxIH7a4k"
+  },
+  {
+    "title": "Coding game mode reverse trouver la logique et l'implémenter",
+    "id": "tmS3AZldodU"
+  },
+  {
+    "title": "Coding game calculer des fonctions affines",
+    "id": "DBCR7x7XJKk"
+  },
+  {
+    "title": "Coding game mode reverse",
+    "id": "E7iYjLlhxOM"
+  },
+  {
+    "title": "Coding game Mesurer le minimum de mouvement d'un robot",
+    "id": "AiPoRPgzj_k"
+  },
+  {
+    "title": "Coding game comment calculer une plage signée en java",
+    "id": "cbMwFOfIjjE"
+  },
+  {
+    "title": "Analyse quinte Jeudi 4 juillet 2024",
+    "id": "0MKoACM9t74"
+  },
+  {
+    "title": "Analyse quinte Mercredi 3 juillet 2024",
+    "id": "kl_eouPXfmo"
+  },
+  {
+    "title": "Analyse du quinte de Mardi 2 juillet 2024",
+    "id": "wJA2NZ4yGT4"
+  },
+  {
+    "title": "Passion du Développeur  Apprendre, Innover, Partager!",
+    "id": "xVPn0U6vFwA"
+  },
+  {
+    "title": "Analyse de quinte du lundi 1 er juillet 2024",
+    "id": "ZtCEIt2ZZ5k"
+  },
+  {
+    "title": "Rapport quinte Vendredi 28 juin 2024",
+    "id": "4xP-_UIGrXM"
+  },
+  {
+    "title": "Rapport quinte jeudi 27 juin 2024",
+    "id": "Fce-nRONpdo"
+  },
+  {
+    "title": "Rapport des chevaux du quinte de Mercredi 26 juin 2024",
+    "id": "WVuasTjLXDI"
+  },
+  {
+    "title": "Resultats des chevaux 2024 du quinte de Mardi 25 juin 2024",
+    "id": "eqKUYhTEr-Y"
+  },
+  {
+    "title": "Resultats 2023 des chevaux du quinte de Mardi 25 juin 2024",
+    "id": "GaC6aNqRDEQ"
+  },
+  {
+    "title": "Comment mettre des commentaires sur une vidéo à l'aide d'une commande",
+    "id": "h9zzbY2r5GI"
+  },
+  {
+    "title": "Preséntation de la chaine pour les nouveaux projets sur le quinte",
+    "id": "ctXDbHY_a1c"
+  },
+  {
+    "title": "Chevaux Quinté lundi 24 juin 2024 🔥",
+    "id": "WHCHVcpqGqY"
+  },
+  {
+    "title": "Resultats 2024 des chevaux du quinte de lundi 24 juin 2024",
+    "id": "IdC_M-IQeQY"
+  },
+  {
+    "title": "Résultats 2023 des chevaux du quinte de lundi 24 juin 2024",
+    "id": "ke3ARwd987c"
+  },
+  {
+    "title": "Résultats 2023 des chevaux du quinte de dimanche 23 juin 2024",
+    "id": "xQUGSwWqVXI"
+  },
+  {
+    "title": "Quinte résultat 2024 des chevaux de la course du dimanche 23 juin 2024",
+    "id": "WrFQaU0Os3Y"
+  },
+  {
+    "title": "Comment généré une video à partir d'images grâce à java et à FFMPEG",
+    "id": "u0n6ff6Xvpw"
+  },
+  {
+    "title": "Rapport des chevaux Quinte lundi 24 juin 2024",
+    "id": "EN8tg22rvrs"
+  },
+  {
+    "title": "PMU Quinte Rapport des chevaux dimanche 23 juin 2024",
+    "id": "RCWOzluEn2w"
+  },
+  {
+    "title": "Rapport Quinte Samedi 22 juin 2024",
+    "id": "X2LCHNyQvNI"
+  },
+  {
+    "title": "Analyse quinte jeudi 20 juin 2024",
+    "id": "Ymi0YSS-qII"
+  },
+  {
+    "title": "Rapport des partants de vendredi 21 juin 2024 quinte Pmu",
+    "id": "FEUQbrP-oaQ"
+  },
+  {
+    "title": "PMU Quinte Rapport jeudi 20 juin 2024 les images sont zoomées ici",
+    "id": "RXBQY1Y3TSQ"
+  },
+  {
+    "title": "Qu est ce que javascript ?",
+    "id": "2dQuPMq8-uU"
+  },
+  {
+    "title": "Qu'est ce que java?",
+    "id": "M0NUS5aor20"
+  },
+  {
+    "title": "Quinte analyse du Mercredi 19 juin 2024",
+    "id": "eHx0-9D6G60"
+  },
+  {
+    "title": "Analyse quinte du mardi 18 juin 2024",
+    "id": "PJ6ANv4Z_BE"
+  },
+  {
+    "title": "Génération de diapositive automatiquement avec un ordre et du texte",
+    "id": "x5g9iOb8yGA"
+  },
+  {
+    "title": "Générer des diapositives avec des images à partir d'un dossier d'images",
+    "id": "W3TsYZiYqPc"
+  },
+  {
+    "title": "Quinte Analyse PMU du 17/06/2024",
+    "id": "krpsfIVycSs"
+  },
+  {
+    "title": "Mon avis sur le quinte du 16/06/2024",
+    "id": "xxDVmB-c2y8"
+  },
+  {
+    "title": "Analyse du Quinté Pmu de Samedi 15 juin 2024",
+    "id": "DXusM00W2rQ"
+  },
+  {
+    "title": "Quinte Analyse Pmu Vendredi 14 juin 2024",
+    "id": "wo3IiQoYAEI"
+  },
+  {
+    "title": "Quinte Pmu analyse jeudi 13 juin 2024",
+    "id": "9PYUB2L-bCI"
+  },
+  {
+    "title": "Quinte analyse Pmu Mercredi 12 juin 2024",
+    "id": "74ZVhc-WQsM"
+  },
+  {
+    "title": "Quinte Pmu analyse du Mardi 11 juin 2024",
+    "id": "TM88qUjQSqU"
+  },
+  {
+    "title": "Quinte du lundi 10 juin 2024 analyse pmu",
+    "id": "vUkcAYUJGmQ"
+  },
+  {
+    "title": "Analyse PMU dimanche 9 juin 2024",
+    "id": "LAgux00WayQ"
+  },
+  {
+    "title": "Quinte du vendredi 7 juin 2024 mon analyse",
+    "id": "gxnrzop439c"
+  },
+  {
+    "title": "Analyse pmu du 4 juin 2024",
+    "id": "HiG7vQOimuU"
+  },
+  {
+    "title": "Est ce que les cotes faibles arrivent plus souvent premier au pmu?",
+    "id": "xOWYWTfKuvU"
+  },
+  {
+    "title": "Création de ma propre base pmu avec météo, hippodrome, chevaux, driveur et bien d'autres",
+    "id": "ZBP6RAJz--k"
+  },
+  {
+    "title": "analyse pmu",
+    "id": "yb28UINKSWY"
+  },
+  {
+    "title": "Affichage des messages d'erreur dans l'application de stock",
+    "id": "QTN8EKqj2Ag"
+  },
+  {
+    "title": "Budget mai 2024",
+    "id": "C0qvtleuOlQ"
+  },
+  {
+    "title": "Ajout de filtres sur la liste des articles de gestion de stock",
+    "id": "85bxoyjs-Pk"
+  },
+  {
+    "title": "Démonstration des fonctionnalités de mon application de vente",
+    "id": "jwCgVQFtmao"
+  },
+  {
+    "title": "Création de la facture automatique pour la gestion de stock",
+    "id": "EEOLxwrijMs"
+  },
+  {
+    "title": "Réalisation d'un panier pour la gestion de stock",
+    "id": "dN_BhESMS-c"
+  },
+  {
+    "title": "Gestion de budget export pdf lisible",
+    "id": "34pKEMC_q14"
+  },
+  {
+    "title": "Gestion de stock code jour 12",
+    "id": "hVqnSWqhfXA"
+  },
+  {
+    "title": "Ajout des messages d'information dans mon application de gestion de stock jour 11",
+    "id": "jO_ukZBNKUM"
+  },
+  {
+    "title": "Amélioration du panier de gestion de stock et code react pour le faire jour 10",
+    "id": "o0J_ca44qb8"
+  },
+  {
+    "title": "Comment coder un changement de mot de passe jour 9",
+    "id": "yELuHgdqxC8"
+  },
+  {
+    "title": "Gestion de stock création de mon panier pour achat jour 8",
+    "id": "C_hqhI8Aimc"
+  },
+  {
+    "title": "Gestion de stock panier d'achat plus design  jour 7",
+    "id": "FiPx_q4mJB8"
+  },
+  {
+    "title": "Récupérer les prix des cartes sur un site et les mettre dans ma gestion de stock jour6",
+    "id": "23dmivTPisw"
+  },
+  {
+    "title": "Premier déploiement de mon application de gestion de stock jour 5",
+    "id": "ytVhXeaMwZ8"
+  },
+  {
+    "title": "Faire un jolie tableau de stock en pdf avec pdfkitTable",
+    "id": "oxxRvthlJes"
+  },
+  {
+    "title": "Gestion de stock export pdf et excel jour 4",
+    "id": "Iw80ZZ0MQTs"
+  },
+  {
+    "title": "Gestion de stock quantite negative et prix total ajouté jour 4",
+    "id": "YhaUobxlyQE"
+  },
+  {
+    "title": "Ajout des filtres sur la gestion de stock jour4",
+    "id": "zADDmGCSNn8"
+  },
+  {
+    "title": "Gestion de stock avancement jour 3",
+    "id": "gDIR7XiUqxs"
+  },
+  {
+    "title": "Gestion de stock avancement du projet jour 2",
+    "id": "YYmNxObtQiw"
+  },
+  {
+    "title": "Projet gestion de stock Commencement du code",
+    "id": "H2LaXtCb1Jk"
+  },
+  {
+    "title": "Début de mon projet de gestion de stock",
+    "id": "alK7JyZIspw"
+  },
+  {
+    "title": "Api nest qui génére un pdf de bilan des dépenses avec pdfkit",
+    "id": "CC_sUgwPOug"
+  },
+  {
+    "title": "Télécharger les dépenses en pdf",
+    "id": "TvXqi5ErhcY"
+  },
+  {
+    "title": "Application de gestion de budget",
+    "id": "IlUJugqXOiE"
+  },
+  {
+    "title": "Mon bilan personnel d'avril 2024",
+    "id": "V1jq8bD6Izg"
+  },
+  {
+    "title": "Suivi de prix de carte magic à l'aide d'un programme",
+    "id": "E8Zyj-aWlYE"
+  },
+  {
+    "title": "Mes plats préférés 2024",
+    "id": "Zcu9HWxM4P8"
+  },
+  {
+    "title": "Classeur magic principalement La guerre des planeswalkers",
+    "id": "yLOdYOJlVvA"
+  },
+  {
+    "title": "Ma collection de terrains rares à magic 2024",
+    "id": "0GJ5ImDvwLE"
+  },
+  {
+    "title": "Deuxieme classeur lorcana",
+    "id": "JWnDjngNCjk"
+  },
+  {
+    "title": "Mon budget de mars 2024",
+    "id": "GMDIT4TMf_0"
+  },
+  {
+    "title": "Mon premier classeur lorcana",
+    "id": "s1HjSSZtLsE"
+  },
+  {
+    "title": "Bilan des dépenses de février 2024 sur mon application de gestion de budget",
+    "id": "LXX9KDNES8M"
+  },
+  {
+    "title": "Validation de publication articles pour mon blog 2024 code",
+    "id": "4EhJbb1uDrA"
+  },
+  {
+    "title": "Ajout de photo sur mon blog d'articles upload de fichier avec nest js",
+    "id": "t-a8ja025EQ"
+  },
+  {
+    "title": "Je code mon blog 2024 en React et Nest js",
+    "id": "Hp3Z0Ayj5wA"
+  },
+  {
+    "title": "Api nest js pour mon blog",
+    "id": "p3bjQL6HLto"
+  },
+  {
+    "title": "Budget de janvier 2024 mes dépenses et mon bilan",
+    "id": "7PX9zEHrpjA"
+  },
+  {
+    "title": "Quelques plats déguster en région parisienne",
+    "id": "E7iQPQT4Ld8"
+  },
+  {
+    "title": "Mon parcours professionnel jusqu'à aujourd'hui",
+    "id": "r6GtlBuV4dg"
+  },
+  {
+    "title": "Mon budget 2023 bilan",
+    "id": "JgjpvdUY8Sc"
+  },
+  {
+    "title": "Rechercher tous les pdf d'un dossier et les copier dans un nouveau dossier en java",
+    "id": "wXeP8Tkp0yg"
+  },
+  {
+    "title": "Héberger deux sever web sur la même machine sur deux ports différents avec nginx",
+    "id": "N1N0wb4R3tE"
+  },
+  {
+    "title": "Kata java texas holdem parie 6",
+    "id": "M7H2q0_dpSk"
+  },
+  {
+    "title": "Kata java texas holdem partie 5",
+    "id": "TlzYVhXKIYU"
+  },
+  {
+    "title": "kata java texas holdem partie 4",
+    "id": "_c9Y9g6z_-E"
+  },
+  {
+    "title": "kata java texas holdem partie3",
+    "id": "IsZdoMLTrng"
+  },
+  {
+    "title": "Kata code Texas holdem Partie 2",
+    "id": "UHDn-nZsqGo"
+  },
+  {
+    "title": "Kata de code texas holdem en TDD Partie 1",
+    "id": "ho0u8Z4QUw0"
+  },
+  {
+    "title": "Comment insérer des données dans mon application de gestion de budget à l'aide d'excel",
+    "id": "xeLt0ce95Pw"
+  },
+  {
+    "title": "Extraire des offres d'emploi automatiquement",
+    "id": "v6emCcePfj0"
+  },
+  {
+    "title": "Application de budget idéal pour faire son bilan personnel par mois",
+    "id": "1qTc2W83qMY"
+  },
+  {
+    "title": "Coder un générateur de Cv en react",
+    "id": "fdTJ-A3MTnA"
+  },
+  {
+    "title": "Développer une application de gestion de budget en 3 mois",
+    "id": "0A-kNf5366c"
+  },
+  {
+    "title": "Télécharger des bilans de budget en pdf grâce à l'application",
+    "id": "qFv7iXI7dZE"
+  },
+  {
+    "title": "Avancement du projet de gestion de budget en react et nest js",
+    "id": "ZGGBJhud23Q"
+  },
+  {
+    "title": "Application de gestion de budget: fonctionnalité budget début du mois",
+    "id": "VzgrThhQ52Y"
+  },
+  {
+    "title": "Gestion de budget graphique sur tous les mois par catégorie",
+    "id": "XzMgIpiJ0Bw"
+  },
+  {
+    "title": "Analyse de mon budget jusqu'à novembre",
+    "id": "fUsnKCQSTSw"
+  },
+  {
+    "title": "Gestion de budget avancement octobre",
+    "id": "RPiSeyPVyts"
+  },
+  {
+    "title": "Gestion de budget par une application gratuite",
+    "id": "kqY-CTYe8N4"
+  },
+  {
+    "title": "One piece kingdoms of intrigue boite de 24 booster ouverture",
+    "id": "kDcL-Ko9-A0"
+  },
+  {
+    "title": "Gestion de budget avec une application web",
+    "id": "z3c-YRTX5Sw"
+  },
+  {
+    "title": "Tuto git sur intellij en français",
+    "id": "yP5rXUxOno0"
+  },
+  {
+    "title": "Gestion de budget application web avancement du projet",
+    "id": "FL1LRNkM2aE"
+  },
+  {
+    "title": "Site pour faire un budget simple de la vie quotidienne gratuit",
+    "id": "o7iU-Z3rn74"
+  },
+  {
+    "title": "Gestion de budget et de tache avec une application web Episode 6",
+    "id": "n_D9HBYpQrk"
+  },
+  {
+    "title": "Gestion de budget et de taches projet React Episode 5",
+    "id": "uNmC1NrQ3pQ"
+  },
+  {
+    "title": "Gestion de budget avec une belle application web Episode 4",
+    "id": "5ExzHB0MFRo"
+  },
+  {
+    "title": "Gestion de budget avancement du projet Episode 3",
+    "id": "7iet9XpAiyQ"
+  },
+  {
+    "title": "Gestion de budget grâce à une application React Episode 2",
+    "id": "yKmjNxaIs0M"
+  },
+  {
+    "title": "Gestion de son budget et de ses tâches quotidiennes Episode 1",
+    "id": "N2aAyj49wM4"
+  },
+  {
+    "title": "Classeur de collection magic de carte rare",
+    "id": "g0rCZib0bz0"
+  },
+  {
+    "title": "Todo list react nest js",
+    "id": "zyq4EUMqO1Y"
+  },
+  {
+    "title": "React login page d'accueil code live",
+    "id": "MKAIKgO9pps"
+  },
+  {
+    "title": "Todo list React code",
+    "id": "kiQw3piTxus"
+  },
+  {
+    "title": "partie2 selesnia",
+    "id": "J0V1QoOLHp4"
+  },
+  {
+    "title": "Magic arena selesnia",
+    "id": "UOum_Y_w64I"
+  },
+  {
+    "title": "Api Express Node JS pour la gestion de ventes",
+    "id": "8vjPvZ_oXfM"
+  },
+  {
+    "title": "Gestion de vente et de produit Angular Node JS",
+    "id": "LEzI47ippfI"
+  },
+  {
+    "title": "Robot pour chercher les prix des cartes yu gi oh",
+    "id": "xIUcEUmOnLg"
+  },
+  {
+    "title": "Marter duel guerrier ancien partie 3",
+    "id": "T5C4lwAVBk8"
+  },
+  {
+    "title": "master duel guerrier ancien",
+    "id": "tyNweN3fn0U"
+  },
+  {
+    "title": "yu gi oh tin box 2022",
+    "id": "qJOvtiRguDw"
+  },
+  {
+    "title": "Ma collection yu gi oh",
+    "id": "IodER9tJaug"
+  },
+  {
+    "title": "yu gi oh ouverture Pouvoir des élèments",
+    "id": "d4FeTU_6SBc"
+  },
+  {
+    "title": "yu gi oh le pouvoir des elements suite",
+    "id": "XFGo0ZIjEsg"
+  },
+  {
+    "title": "yu gi oh pouvoir des element ouverture",
+    "id": "1UOn_fhgJJI"
+  },
+  {
+    "title": "yu gi oh Les maitres tactiques ouverture",
+    "id": "TGDYpZ6wDdY"
+  },
+  {
+    "title": "yu gi oh dueliste legendaire ouverture",
+    "id": "1K3YrbIvPyw"
+  },
+  {
+    "title": "ouverture yugioh le pouvoir des éléments",
+    "id": "CXVX8PahcAE"
+  },
+  {
+    "title": "Double master 2022 Magic the gathering Ouverture incroyable",
+    "id": "2kX6EpdvGqQ"
+  },
+  {
+    "title": "Html CSS resultat de mon site de présentation",
+    "id": "BhR5OooYSu4"
+  },
+  {
+    "title": "Ouverture de yu gi oh force dimensionnelle",
+    "id": "ytB4Rda-I-A"
+  },
+  {
+    "title": "Va t on enfin avoir une ghost from the past 2 ?",
+    "id": "DkrWyWb4-YY"
+  },
+  {
+    "title": "Mon premier classeur magic the gathering collection de carte",
+    "id": "dmbEd4KeVe4"
+  },
+  {
+    "title": "Kata Mars Rover episode1 java jdk17 Debutant",
+    "id": "tMd_e6akSV8"
+  },
+  {
+    "title": "Ouverture de yu gi oh fantôme du passé la deuxième incarnation 3",
+    "id": "oew5Zf25bHs"
+  },
+  {
+    "title": "Ouverture de yu gi oh fantôme du passé la deuxième incarnation 2",
+    "id": "KXdOxTaUEsA"
+  },
+  {
+    "title": "Ouverture de yu gi oh les fantomes du passé la deuxième incarnation",
+    "id": "ipq8kOkaGxI"
+  },
+  {
+    "title": "Carte yu gi oh transformé en texte et recherche de prix sur magicardmarket en local",
+    "id": "wztQ878tK-Q"
+  },
+  {
+    "title": "Recherche un deck yu gi en local suite projet",
+    "id": "oCLwiW9Xu7E"
+  },
+  {
+    "title": "Express et pupetteer api pour recherche de carte yu gi oh",
+    "id": "dI3eehjrVYo"
+  },
+  {
+    "title": "Reconnaissance des titres de cartes yu gi oh et conversion en lettre",
+    "id": "4O89N8KjAGA"
+  },
+  {
+    "title": "Convertir une liste de carte yu gi oh de cardmarket  to mp3",
+    "id": "9LK4mSvgJHg"
+  },
+  {
+    "title": "Recuperation des prix de cartes yu gi oh par scrapping sur cardmarket",
+    "id": "x1wU82KedpE"
+  },
+  {
+    "title": "Suite récupérer le prix de cartes yu gi oh",
+    "id": "HHdjOj2STiQ"
+  },
+  {
+    "title": "Web scrapping cardmarket prix des cartes yu gi oh",
+    "id": "fYB-ulLF1Z4"
+  },
+  {
+    "title": "Ouverture de booster bataille du chaos",
+    "id": "w0x28XEbMB0"
+  },
+  {
+    "title": "ouverture de booster yu gi oh bataille du chaos et aube de la majesté",
+    "id": "p-O8qnE66FY"
+  },
+  {
+    "title": "Ouverture de or eldorado Yu-Gi-Oh 2022",
+    "id": "uxXWmWWsTPE"
+  },
+  {
+    "title": "Ouverture tin box 2021 Yu-Gi-Oh",
+    "id": "xxWj9rGJDlc"
+  },
+  {
+    "title": "Projet de gestion de vente et de produit avec Angular 13",
+    "id": "yMpYjIUQcCk"
+  },
+  {
+    "title": "Projet de gestion de stock vente et de personne Angular 13",
+    "id": "XSuyEBPlvWY"
+  },
+  {
+    "title": "Magic collection",
+    "id": "YxIKwH58vrk"
+  },
+  {
+    "title": "Angular 13 Express Bataillle Navale Projet code",
+    "id": "fs1tkI4LwoE"
+  },
+  {
+    "title": "java",
+    "id": "-wxi2Jj7gy8"
+  },
+  {
+    "title": "java classe Episode 2",
+    "id": "0dGcxd1RT9c"
+  },
+  {
+    "title": "cours java class",
+    "id": "jNZacwRGkjw"
+  },
+  {
+    "title": "Qu'est ce que java?",
+    "id": "PJ3bE88bQcs"
+  },
+  {
+    "title": "Ondin modern MTG Magic Online",
+    "id": "FVpvHdQn5oo"
+  },
+  {
+    "title": "collection de terrain magic",
+    "id": "Bz6FQS_ECoM"
+  },
+  {
+    "title": "Collection yu-gi-oh classeur 1",
+    "id": "JlLqKgJd8lQ"
+  },
+  {
+    "title": "Yu-Gi-Oh la rage phantome ouverture display",
+    "id": "jUnwBxQhCaY"
+  },
+  {
+    "title": "MTG Arena deck garuk maison",
+    "id": "PFNSNrDUFoA"
+  },
+  {
+    "title": "MTG ARENA kroxa partie 2",
+    "id": "THqPQHirZZU"
+  },
+  {
+    "title": "MTG Arena deck maison Kroxa",
+    "id": "1X7xT2HS6dM"
+  }
+];
+
+    const container = document.getElementById("video-list");
+
+    videos.forEach(video => {
+      const div = document.createElement("div");
+      div.className = "video";
+
+      const h3 = document.createElement("h3");
+      h3.textContent = video.title;
+
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
+      img.alt = video.title;
+      img.onclick = () => {
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        div.replaceChild(iframe, img);
+      };
+
+      div.appendChild(h3);
+      div.appendChild(img);
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>
